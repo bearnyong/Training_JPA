@@ -35,5 +35,4 @@ public class Training01Tests {
         entityManagerFactory.close();
     }
 
-
 }

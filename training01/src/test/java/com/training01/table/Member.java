@@ -5,6 +5,7 @@ import com.training01.enumType.RoleType;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /*
 [ 회원 ]
@@ -63,6 +64,10 @@ public class Member {
     @Column(name = "mem_delete_date")
     @Temporal(TemporalType.DATE) //날짜를 저장한다.
     private Date memDeleteDate; //삭제일
+
+    @OneToMany(mappedBy = "member") //해도 되고 안 해도 되는 mappedBy
+    private List<Order> orderList;
+    //회원 1명 -> 주문 여러 개
 
     public Member() {
     }

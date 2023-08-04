@@ -2,6 +2,7 @@ package com.training01.table;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /*
 [ 주문 ]
@@ -31,6 +32,11 @@ public class Order {
     @Column(name = "order_delete_date")
     @Temporal(TemporalType.DATE) //날짜를 저장한다.
     private Date orderDeleteDate; //주문삭제일
+
+    @JoinColumn(name = "mem_num")
+    @ManyToOne
+    private Member memberNum;
+    //주문번호 1개 -> 회원 한 명
 
     public Order() {
     }

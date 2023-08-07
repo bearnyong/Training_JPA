@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Training02Tests {
 
@@ -117,6 +118,26 @@ public class Training02Tests {
     }
 
     @Test
+    public void 양방향_연관관계_저장() {
+        //185페이지
+        //student 저장
+        Student student = new Student().stuName("이상우").stuAddr("김포다").stuPhone("010-1234-5678").bulider();
+        entityManager.persist(student);
+
+        //grade1 저장
+        Grade grade1 = new Grade().semester("1학기").gradeScore(80).builder();
+        grade1.setGradePK(new GradePK(1,1));
+        grade1.setStudent(student); //연관관계 설정 grade1 -> student
+        entityManager.persist(grade1);
+
+        //grade2 저장
+        Grade grade2 = new Grade().semester("3학기").gradeScore(50).builder();
+        grade1.setGradePK(new GradePK(1,1));
+        grade2.setStudent(student); //연관관계 설정 grade2 -> student
+        entityManager.persist(grade2);
+    }
+
+    @Test
     public void 다대일_Grade_대_Student_객체_삽입_테스트() {
         Student student = new Student().stuName("이상우").stuAddr("하이미디어").stuPhone("010-1234-23414").bulider();
         Subject subject = new Subject().subName("국어").bulider();
@@ -142,19 +163,30 @@ public class Training02Tests {
     }
 
     @Test
+    public void 일대다_방향으로_객체_그래프_탐색() {
+        //181페이지..
+        Student st = entityManager.find(Student.class, 1);
+        List<Grade> gr = st.getGrades();
+
+        for (Grade grade : gr) {
+            System.out.println(grade.getSemester() + ", " + grade.getGradeScore());
+        }
+
+    }
+
+    @Test
     public void 양방향_연관관계_주인_객체를_이용한_삽입_테스트() {
         Student student = new Student().stuName("고민영").stuAddr("김포").stuPhone("010-3423-23414").bulider();
         entityManager.persist(student);
         System.out.println(student);
 
-//        Grade grade = new Grade().semester("2학기").gradeScore(30).builder();
-//        grade.setStudent(entityManager.find(Student.class, 1));
-//
-//        EntityTransaction transaction = entityManager.getTransaction();
-//        transaction.begin();
-//
-//        entityManager.persist(grade);
-//        transaction.commit();
+        Grade grade = new Grade().semester("2학기").gradeScore(30).builder();
+        grade.setStudent(entityManager.find(Student.class, 1));
 
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        entityManager.persist(grade);
+        transaction.commit();
     }
 }

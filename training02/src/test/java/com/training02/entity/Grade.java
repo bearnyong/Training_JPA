@@ -21,8 +21,9 @@ public class /*학점*/Grade {
     @Column(name = "grade_score", nullable = false) //NOT NULL
     private int gradeScore; //과목점수
 
-    @ManyToOne
-    @JoinColumn(name = "stu_num")
+    @ManyToOne //연관관계 매핑 -> setter로 연관관계 설정
+    @JoinColumn(referencedColumnName = "stu_num")
+    //외래 키가 참조하는 대상 테이블의 컬럼명
     private Student student;
 
     public Grade() {
@@ -82,7 +83,7 @@ public class /*학점*/Grade {
 
     public void setStudent(Student student) {
         this.student = student;
-    }
+    } //연관관계 설정
 
     @Override
     public String toString() {

@@ -1,9 +1,12 @@
 package com.training02.entity;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+
+/* 양방향은 외래 키가 있는 쪽이 연관관계의 주인이다.
+ * 일대다와 다대일 연관관계는 항상 다(N)에 외래 키가 있다.
+ * 여기서는 다(N)쪽인 Grade 테이블이 외래 키를 가지고 있으므로 Grade.student가 연관관계의 주인이 된다?
+ * Student.grades는 조회를 위한 JPQL이나 객체 그래프를 탐색할 때 사용한다? */
 
 @Entity(name = "training02_grade")
 @Table(name = "tbl_training02_grade")
@@ -18,13 +21,18 @@ public class /*학점*/Grade {
     @Column(name = "grade_score", nullable = false) //NOT NULL
     private int gradeScore; //과목점수
 
+    @ManyToOne
+    @JoinColumn(name = "stu_num")
+    private Student student;
+
     public Grade() {
     }
 
-    public Grade(GradePK gradePK, String semester, int gradeScore) {
+    public Grade(GradePK gradePK, String semester, int gradeScore, Student student) {
         this.gradePK = gradePK;
         this.semester = semester;
         this.gradeScore = gradeScore;
+        this.student = student;
     }
 
     /*빌더패턴 사용해보기*/
@@ -38,8 +46,9 @@ public class /*학점*/Grade {
         return this;
     }
 
+
     public Grade builder() {
-        return new Grade(gradePK, semester, gradeScore);
+        return new Grade(gradePK, semester, gradeScore, student);
     }
 
     /*Getter, Setter*/
@@ -67,12 +76,21 @@ public class /*학점*/Grade {
         this.gradeScore = gradeScore;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
     @Override
     public String toString() {
         return "Grade{" +
                 "gradePK=" + gradePK +
                 ", semester='" + semester + '\'' +
                 ", gradeScore=" + gradeScore +
+                ", student=" + student +
                 '}';
     }
 }

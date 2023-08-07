@@ -1,6 +1,8 @@
 package com.training02.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity(name = "training02_student")
 @Table(name = "tbl_training02_student")
@@ -17,14 +19,20 @@ public class /*학생*/Student {
     @Column(name = "stu_addr", nullable = false) //NOT NULL
     private String stuAddr; //주소
 
+    @OneToMany(mappedBy = "tbl_training02_student")
+    //연관관계의 주인 정하기... 양뱡향 관계에서 주체가 되는 쪽(Many쪽, 외래키가 있는 쪽)을 정의
+    private List<Grade> grades = new ArrayList<Grade>();
+
     public Student() {
     }
 
-    public Student(int stuNum, String stuName, String stuPhone, String stuAddr) {
+
+    public Student(int stuNum, String stuName, String stuPhone, String stuAddr, List<Grade> grades) {
         this.stuNum = stuNum;
         this.stuName = stuName;
         this.stuPhone = stuPhone;
         this.stuAddr = stuAddr;
+        this.grades = grades;
     }
 
     /*빌더패턴 사용해보기*/
@@ -49,10 +57,17 @@ public class /*학생*/Student {
     }
 
     public Student bulider() {
-        return new Student(stuNum, stuName, stuPhone, stuAddr);
+        return new Student(stuNum, stuName, stuPhone, stuAddr, grades);
     }
 
     /*Getter, Setter*/
+//    public void addGrade(Grade grade) {
+//        this.grades.add(grade);
+//        if (grade.getStudent() != this) { //무한루프에 빠지지 않도록 체크...
+//            grade.setStudent(this);
+//        }
+//    }
+
 
     public int getStuNum() {
         return stuNum;
@@ -86,6 +101,14 @@ public class /*학생*/Student {
         this.stuAddr = stuAddr;
     }
 
+    public List<Grade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<Grade> grades) {
+        this.grades = grades;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
@@ -93,6 +116,7 @@ public class /*학생*/Student {
                 ", stuName='" + stuName + '\'' +
                 ", stuPhone='" + stuPhone + '\'' +
                 ", stuAddr='" + stuAddr + '\'' +
+                ", grades=" + grades +
                 '}';
     }
 }

@@ -116,5 +116,45 @@ public class Training02Tests {
         transaction.commit();
     }
 
+    @Test
+    public void 다대일_Grade_대_Student_객체_삽입_테스트() {
+        Student student = new Student().stuName("이상우").stuAddr("하이미디어").stuPhone("010-1234-23414").bulider();
+        Subject subject = new Subject().subName("국어").bulider();
+        Grade grade = new Grade().semester("2학기").gradeScore(30).builder();
 
+        System.out.println(student);
+        System.out.println(subject);
+        System.out.println(grade);
+
+//        grade.setStudent(student);
+//        grade.setSubject(subject);
+
+        System.out.println(grade);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+//        entityManager.persist(student);
+//        entityManager.persist(subject);
+        entityManager.persist(grade);
+
+        transaction.commit();
+    }
+
+    @Test
+    public void 양방향_연관관계_주인_객체를_이용한_삽입_테스트() {
+        Student student = new Student().stuName("고민영").stuAddr("김포").stuPhone("010-3423-23414").bulider();
+        entityManager.persist(student);
+        System.out.println(student);
+
+//        Grade grade = new Grade().semester("2학기").gradeScore(30).builder();
+//        grade.setStudent(entityManager.find(Student.class, 1));
+//
+//        EntityTransaction transaction = entityManager.getTransaction();
+//        transaction.begin();
+//
+//        entityManager.persist(grade);
+//        transaction.commit();
+
+    }
 }

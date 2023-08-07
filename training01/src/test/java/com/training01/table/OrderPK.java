@@ -11,11 +11,9 @@ import java.util.Objects;
 public class OrderPK implements Serializable {
 
     @Column(name = "order_num")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 관리하는 전략 사용
     private int orderNum; //주문번호
 
     @Column(name = "pro_num")
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 관리하는 전략 사용
     private int proNum; //제품번호
 
     public OrderPK() {

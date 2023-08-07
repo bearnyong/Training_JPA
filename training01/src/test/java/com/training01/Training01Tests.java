@@ -1,13 +1,16 @@
 package com.training01;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import com.training01.enumType.RoleType;
+import com.training01.table.Member;
+import com.training01.table.Order;
+import com.training01.table.OrderPK;
+import org.junit.jupiter.api.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.Date;
 
 public class Training01Tests {
 
@@ -35,4 +38,33 @@ public class Training01Tests {
         entityManagerFactory.close();
     }
 
+    @Test
+    public void Member_table_왜_생성_안되니() {
+        Member member = new Member();
+        member.setMemName("이상우");
+        member.setMemNickname("릴라릴라고릴라");
+        member.setMemPhone("010-1234-5678");
+        member.setMemPostcode("10110");
+        member.setMemGeneralAddr("경기도 김포시");
+        member.setMemDetailedAddr("하이미디어");
+        member.setMemRole(RoleType.MEMBER);
+        member.setMemStatus("Y");
+        member.setMemInsertDate(new Date());
+
+        entityManager.persist(member);
+    }
+
+    @Test
+    public void 이게_되는건가() {
+        /*EmbeddedId 확인해보기?*/
+        Order order = new Order();
+        order.setOrderPK(new OrderPK());
+        order.setOrderStatus("Y");
+        order.setOrderDate(new Date());
+
+        entityManager.persist(order);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+//        transaction.commit();
+    }
 }

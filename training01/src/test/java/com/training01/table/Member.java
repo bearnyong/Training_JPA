@@ -65,9 +65,9 @@ public class Member {
     @Temporal(TemporalType.DATE) //날짜를 저장한다.
     private Date memDeleteDate; //삭제일
 
-    @OneToMany(mappedBy = "member") //해도 되고 안 해도 되는 mappedBy
-    private List<Order> orderList;
-    //회원 1명 -> 주문 여러 개
+//    @OneToMany(mappedBy = "memberNum") //해도 되고 안 해도 되는 mappedBy -> 얘를 참조하고 있는 필드명...
+//    private List<Order> orderList;
+//    //회원 1명 -> 주문 여러 개
 
     public Member() {
     }

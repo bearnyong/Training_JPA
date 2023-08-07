@@ -17,6 +17,10 @@ public class Product {
 
     private OrderPK orderPK;
 
+    @Column(name = "pro_num")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 관리하는 전략 사용
+    private int proNum; //제품번호
+
     @Column(name = "pro_name", unique = true) //제품명은 중복되지 않는다.
     private String proName; //제품명
 

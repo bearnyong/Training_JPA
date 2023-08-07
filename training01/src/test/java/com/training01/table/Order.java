@@ -18,6 +18,10 @@ public class Order {
     @EmbeddedId //orderPK값 매핑...(필드 접근 타입)
     private OrderPK orderPK;
 
+    @Column(name = "order_num")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 관리하는 전략 사용
+    private int orderNum; //주문번호
+
     @Column(name = "order_status")
     private String orderStatus; //주문상태
 
@@ -33,9 +37,10 @@ public class Order {
     @Temporal(TemporalType.DATE) //날짜를 저장한다.
     private Date orderDeleteDate; //주문삭제일
 
-    @JoinColumn(name = "mem_num")
-    @ManyToOne
-    private Member memberNum;
+//    @JoinColumn(name = "mem_num")
+//    @ManyToOne
+    @Column(name = "mem_num")
+    private int memberNum;
     //주문번호 1개 -> 회원 한 명
 
     public Order() {

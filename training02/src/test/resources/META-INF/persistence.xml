@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.2">
     <persistence-unit name="jpatest"> <!--entityManagerFactory 환경등록 이름 맞추기-->
-<!--        <class>com.training01.table.Member</class>-->
-        <class>com.training01.table.Order</class>
-<!--        <class>com.training01.table.Product</class>-->
+        <class>com.training02.entity.Student</class>
+        <class>com.training02.entity.Subject</class>
+        <class>com.training02.entity.Grade</class>
         <properties>
             <!--DB Connection의 관련된 설정해주기-->
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/menudb"/>
             <property name="javax.persistence.jdbc.user" value="myjpa"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
-
             <!--hiberNate-->
             <property name="hibernate.show_sql" value="true"/> <!--쿼리보여주기-->
             <property name="hibernate.format_sql" value="true"/> <!--일자 말고 포맷팅 예쁘게 정리해주기-->

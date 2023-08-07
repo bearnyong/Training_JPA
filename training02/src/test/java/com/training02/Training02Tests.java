@@ -1,0 +1,120 @@
+package com.training02;
+
+import com.training02.entity.Grade;
+import com.training02.entity.GradePK;
+import com.training02.entity.Student;
+import com.training02.entity.Subject;
+import org.junit.jupiter.api.*;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+
+public class Training02Tests {
+
+    private static EntityManagerFactory entityManagerFactory; //Entity를 만들기 위한 공장
+    private EntityManager entityManager;
+
+    @BeforeAll //최초 1회 실행
+    public static void initFactory() {
+        entityManagerFactory = Persistence.createEntityManagerFactory(/*환경등록*/"jpatest");
+    }
+
+    @BeforeEach //테스트 케이스별 실행 전마다 실행
+    public void initManager() {
+        //테스트 전에 null 값을 가지고 있는 entityManager에 생성하여 넣어준다.
+        entityManager = entityManagerFactory.createEntityManager();
+    }
+
+    @AfterEach //테스트 케이스별 실행 후마다 실행
+    public void closeManager() {
+        entityManager.close();
+    }
+
+    @AfterAll //모든 테스트 종료후 1회 실행 (공장 닫아주기~ 종료 됐어요~)
+    public static void closeFactory() {
+        entityManagerFactory.close();
+    }
+
+    @Test
+    public void test1() {
+        Student student = new Student();
+        student.stuName("민지");
+        student.stuPhone("010-2345-3456");
+        student.stuAddr("강남");
+
+        entityManager.persist(student);
+    }
+
+    @Test
+    public void test2() {
+        Subject subject = new Subject().subName("edldld").bulider();
+
+        System.out.println(subject);
+    }
+
+    @Test
+    public void student_subject_셋_다_들어가나요_1() {
+        /*Student*/
+        //num은 DB에서 관리 @GeneratedValue
+        Student student = new Student().stuName("고민영").stuAddr("김포").stuPhone("010-3423-23414").bulider();
+        entityManager.persist(student);
+        System.out.println(student);
+
+        /*Subject*/
+        Subject subject = new Subject().subName("edldld").bulider();
+        entityManager.persist(subject);
+        System.out.println(subject);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        transaction.commit();
+
+        /*Grade*/
+        //GradePK에 값을 그냥 넣어줌...
+        Student student1 = entityManager.find(Student.class, 1);
+        Subject subject1 = entityManager.find(Subject.class, 1);
+
+        //값이 들어갔는지 확인
+        System.out.println(student1);
+        System.out.println(subject1);
+
+        Grade grade = new Grade();
+        grade.setGradePK(new GradePK(student.getStuNum(), subject.getSubNum())); //GradePK
+        grade.setSemester("1학기");
+        grade.setGradeScore(100);
+        entityManager.persist(grade);
+
+        transaction.begin();
+        transaction.commit();
+    }
+
+    @Test
+    public void student_subject_셋_다_들어가나요_2_코드_줄이기() {
+        /*Student*/
+        Student student = new Student().stuName("고민영").stuAddr("김포").stuPhone("010-3423-23414").bulider();
+        entityManager.persist(student);
+        System.out.println(student);
+
+        /*Subject*/
+        Subject subject = new Subject().subName("edldld").bulider();
+        entityManager.persist(subject);
+        System.out.println(subject);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        /*Grade*/
+        //GradePK에 값을 그냥 넣어줌...
+        Grade grade = new Grade();
+        grade.setGradePK(new GradePK(student.getStuNum(), subject.getSubNum())); //GradePK
+        grade.setSemester("1학기");
+        grade.setGradeScore(100);
+        entityManager.persist(grade);
+
+        transaction.begin();
+        transaction.commit();
+    }
+
+
+}

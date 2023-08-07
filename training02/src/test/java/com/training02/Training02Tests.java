@@ -117,24 +117,49 @@ public class Training02Tests {
         transaction.commit();
     }
 
+    /* 양방향 연관관계의 주의점
+     * 가장 흔히 하는 실수: 연관관계의 주인에는 값을 입력하지 않고, 주인이 아닌 곳에만 값을 입력하는 것
+     * 데이터베이스에 외래 키 값이 정상적으로 저장되지 않을 경우, 가장 먼저 의심해보기!
+     *
+     * 객체 관점에서 양쪽 방향 모두 값을 입력해주는 것이 가장 안전하다.*/
+
     @Test
     public void 양방향_연관관계_저장() {
-        //185페이지
+        //...185페이지...
         //student 저장
         Student student = new Student().stuName("이상우").stuAddr("김포다").stuPhone("010-1234-5678").bulider();
         entityManager.persist(student);
 
         //grade1 저장
         Grade grade1 = new Grade().semester("1학기").gradeScore(80).builder();
-        grade1.setGradePK(new GradePK(1,1));
+        grade1.setGradePK(new GradePK(student.getStuNum(),1));
         grade1.setStudent(student); //연관관계 설정 grade1 -> student
         entityManager.persist(grade1);
 
         //grade2 저장
         Grade grade2 = new Grade().semester("3학기").gradeScore(50).builder();
-        grade1.setGradePK(new GradePK(1,1));
+        grade1.setGradePK(new GradePK(student.getStuNum(),1));
         grade2.setStudent(student); //연관관계 설정 grade2 -> student
         entityManager.persist(grade2);
+    }
+
+    @Test
+    public void 양방향_모두_관계를_설정() {
+        //...188페이지...
+        Student student1 = new Student().stuName("이상우").stuAddr("김포다").stuPhone("010-1234-5678").bulider();
+        Grade grade1 = new Grade().semester("1학기").gradeScore(80).builder();
+        Grade grade2 = new Grade().semester("2학기").gradeScore(50).builder();
+
+        grade1.setStudent(student1); //학점->학생 관계설정 (연관관계의 주인, 외래키를 관리한다.)
+        student1.getGrades().add(grade1); //학생->학점 관계설정 (연관관계의 주인 아님. 저장 시 사용되지 않는다.)
+        entityManager.persist(grade1);
+
+        grade2.setStudent(student1); //학점->학생 관계설정 (연관관계의 주인, 외래키를 관리한다.)
+        student1.getGrades().add(grade2); //학생->학점 관계설정 (연관관계의 주인 아님. 저장 시 사용되지 않는다.)
+        entityManager.persist(grade2);
+
+        List<Grade> grades = student1.getGrades();
+        System.out.println(grades.size());
     }
 
     @Test
@@ -164,7 +189,7 @@ public class Training02Tests {
 
     @Test
     public void 일대다_방향으로_객체_그래프_탐색() {
-        //181페이지..
+        //...181페이지...
         Student st = entityManager.find(Student.class, 1);
         List<Grade> gr = st.getGrades();
 

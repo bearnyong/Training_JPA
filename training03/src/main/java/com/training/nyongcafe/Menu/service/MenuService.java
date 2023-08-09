@@ -4,7 +4,9 @@ import com.training.nyongcafe.Menu.entity.Menu;
 import com.training.nyongcafe.Menu.repository.MenuRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service //<context:component-scan>에 의해 스프링 빈으로 등록된다.
 public class MenuService {
@@ -40,4 +42,13 @@ public class MenuService {
      * 스프링 프레임워크는 이 어노테이션이 붙어 있는 클래스나 메소드에 트랜잭션을 적용한다.
      * 외부에서 이클래스의 메소드를 호출할 떄 트랜잭션을 시작하고 메소드를 종료할 때 트랜잭션을 커밋한다.
      * 만약 예외가 발생하면 트랜잭션을 롤백한다.(503페이지) */
+    @Transactional
+    public int insertOneMenu(Menu menu) { //03_메뉴등록(POST)- DTO
+        Menu result = menuRepository.save(menu);
+        if (Objects.isNull(result)) {
+            return 0; //result가 null일 경우 0 반환
+        } else {
+            return 1; //result가 null이 아닐 경우 1 반환
+        }
+    }
 }

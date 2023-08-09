@@ -13,7 +13,7 @@ public class MenuDTO {
     public MenuDTO() {
     }
 
-    public MenuDTO(Menu menu) {
+    public MenuDTO(Menu menu) { //Menu entity를 MenuDTO에 한 번에 담아주기 위해 생성
         this.menuCode = menu.getMenuCode();
         this.menuName = menu.getMenuName();
         this.menuPrice = menu.getMenuPrice();

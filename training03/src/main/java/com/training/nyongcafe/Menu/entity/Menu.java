@@ -1,9 +1,8 @@
 package com.training.nyongcafe.Menu.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.training.nyongcafe.Menu.dto.MenuDTO;
+
+import javax.persistence.*;
 
 @Entity
 @Table(name = "tbl_menu")
@@ -11,6 +10,7 @@ public class Menu {
 
     @Id
     @Column(name = "menu_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 관리하는 전략 사용
     private int menuCode; //메뉴코드
 
     @Column(name = "menu_name")
@@ -26,6 +26,14 @@ public class Menu {
     private String orderableStatus; //주문가능상태
 
     public Menu() {
+    }
+
+    public Menu(MenuDTO menuDTO) { //MenuDTO를 Menu entity에 한 번에 담아주기 위해 생성
+        this.menuCode = menuDTO.getMenuCode();
+        this.menuName = menuDTO.getMenuName();
+        this.menuPrice = menuDTO.getMenuPrice();
+        this.categoryCode = menuDTO.getCategoryCode();
+        this.orderableStatus = menuDTO.getOrderableStatus();
     }
 
     public Menu(int menuCode, String menuName, int menuPrice, int categoryCode, String orderableStatus) {

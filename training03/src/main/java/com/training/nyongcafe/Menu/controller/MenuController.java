@@ -4,10 +4,7 @@ import com.training.nyongcafe.Menu.dto.MenuDTO;
 import com.training.nyongcafe.Menu.entity.Menu;
 import com.training.nyongcafe.Menu.service.MenuService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,12 +33,13 @@ public class MenuController {
 
     @GetMapping("/read/list") //01_전체조회(GET)- DTO
     public ResponseEntity<List<?>> readAllMenus() { //localhost:8000/menus/read/list
+        System.out.println("----------- 전체 메뉴 조회 시작");
         List<Menu> menuList = menuService.readAllMenus();
         if (menuList.size() <= 0) {
             return ResponseEntity.status(404).body(Collections.singletonList("error"));
         } else {
             List<MenuDTO> menuDTOList = menuList.stream().map(menu -> new MenuDTO(menu)).collect(Collectors.toList()); //객체의 getter로 List 만든다.
-            System.out.println("----------- 전제 조회 완료");
+            System.out.println("----------- 전제 메뉴 조회 완료");
             return ResponseEntity.ok().body(menuDTOList);
         }
     }
@@ -56,6 +54,23 @@ public class MenuController {
             MenuDTO menuDTO = new MenuDTO(menu);
             System.out.println("----------- " + menuDTO.getMenuCode() + "번 메뉴 조회 완료");
             return ResponseEntity.ok().body(menuDTO);
+        }
+    }
+
+    @PostMapping("/insert") //03_메뉴등록(POST)- DTO
+    public ResponseEntity<?> insertOneMenu(MenuDTO menuDTO) {
+        System.out.println("----------- 메뉴 등록 시작");
+        Menu menu = new Menu(menuDTO);
+
+        int result = menuService.insertOneMenu(menu);
+        if (result == 0) {
+            return ResponseEntity.status(404).body("메뉴 등록에 실패하였습니다...");
+        } else if (result == 1) {
+            System.out.println(menu);
+            System.out.println("----------- 메뉴 등록 완료: " + menu.getMenuName());
+            return ResponseEntity.ok().body("메뉴: " + menu.getMenuName() + " (이)가 등록되었습니다.");
+        } else {
+            return ResponseEntity.status(500).body("알 수 없는 오류가 발생하였습니다...");
         }
     }
 }

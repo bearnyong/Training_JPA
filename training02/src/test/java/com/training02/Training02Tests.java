@@ -7,6 +7,7 @@ import com.training02.entity.Subject;
 import org.junit.jupiter.api.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Training02Tests {
@@ -152,21 +153,26 @@ public class Training02Tests {
 
     @Test
     public void 양방향_모두_관계를_설정() {
+        EntityTransaction transaction = entityManager.getTransaction();
+
         //...188페이지...
         Student student1 = new Student().stuName("이상우").stuAddr("김포다").stuPhone("010-1234-5678").bulider();
-        Grade grade1 = new Grade().semester("1학기").gradeScore(80).builder();
-        Grade grade2 = new Grade().semester("2학기").gradeScore(50).builder();
+        Subject subject1 = new Subject();
+        subject1.setSubName("국어");
+        entityManager.persist(subject1);
 
-        grade1.setStudent(student1); //학점->학생 관계설정 (연관관계의 주인, 외래키를 관리한다.)
-        student1.getGrades().add(grade1); //학생->학점 관계설정 (연관관계의 주인 아님. 저장 시 사용되지 않는다.)
-        entityManager.persist(grade1);
+        Grade grade1 = new Grade();
+        grade1.setGradePK(new GradePK(student1.getStuNum(), subject1.getSubNum())); //학점->학생 관계설정 (연관관계의 주인, 외래키를 관리한다.)
+        grade1.setGradeScore(80);
+        grade1.setSemester("1학기");
 
-        grade2.setStudent(student1); //학점->학생 관계설정 (연관관계의 주인, 외래키를 관리한다.)
-        student1.getGrades().add(grade2); //학생->학점 관계설정 (연관관계의 주인 아님. 저장 시 사용되지 않는다.)
-        entityManager.persist(grade2);
+        List<Grade> gredeList = new ArrayList<>();
+        gredeList.add(grade1);
+        student1.setGrades(gredeList);
 
-        List<Grade> grades = student1.getGrades();
-        System.out.println(grades.size());
+        entityManager.persist(student1);
+        transaction.begin();
+        transaction.commit();
     }
 
     @Test

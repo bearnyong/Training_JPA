@@ -1,5 +1,7 @@
 package com.training.nyongcafe.Menu.dto;
 
+import com.training.nyongcafe.Menu.entity.Menu;
+
 public class MenuDTO {
 
     private int menuCode; //메뉴코드
@@ -9,6 +11,14 @@ public class MenuDTO {
     private String orderableStatus; //주문가능상태
 
     public MenuDTO() {
+    }
+
+    public MenuDTO(Menu menu) {
+        this.menuCode = menu.getMenuCode();
+        this.menuName = menu.getMenuName();
+        this.menuPrice = menu.getMenuPrice();
+        this.categoryCode = menu.getCategoryCode();
+        this.orderableStatus = menu.getOrderableStatus();
     }
 
     public MenuDTO(int menuCode, String menuName, int menuPrice, int categoryCode, String orderableStatus) {

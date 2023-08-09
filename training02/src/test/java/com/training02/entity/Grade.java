@@ -10,10 +10,11 @@ import javax.persistence.*;
 
 @Entity(name = "training02_grade")
 @Table(name = "tbl_training02_grade")
+//@JoinTable(name = "테이블명", joinColumns = "해당 테이블과 관계를 맺을 컬럼", inverseJoinColumns = "반대편") -> 엔티티를 안만들어줘도됨
 public class /*학점*/Grade {
 
     @EmbeddedId //gradePK값 매핑
-    private GradePK gradePK;
+    private GradePK gradePK; //값을 안 넣어줌...
 
     @Column(name = "semester", nullable = false) //NOT NULL
     private String semester; //학기 "0학기"의 형식
@@ -21,9 +22,9 @@ public class /*학점*/Grade {
     @Column(name = "grade_score", nullable = false) //NOT NULL
     private int gradeScore; //과목점수
 
+    @MapsId("stuNum")
     @ManyToOne //연관관계 매핑 -> setter로 연관관계 설정
-    @JoinColumn(referencedColumnName = "stu_num")
-    //외래 키가 참조하는 대상 테이블의 컬럼명
+    @JoinColumn(name = "stu_num")
     private Student student;
 
     public Grade() {

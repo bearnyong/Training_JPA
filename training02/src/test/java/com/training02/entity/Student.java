@@ -19,7 +19,7 @@ public class /*학생*/Student {
     @Column(name = "stu_addr", nullable = false) //NOT NULL
     private String stuAddr; //주소
 
-    @OneToMany(mappedBy = "tbl_training02_student")
+    @OneToMany(mappedBy = "Student") //반대편 필드에 적힌 이름...
     //연관관계의 주인 정하기... 양뱡향 관계에서 주체가 되는 쪽(Many쪽, 외래키가 있는 쪽)을 정의
     private List<Grade> grades = new ArrayList<Grade>();
 

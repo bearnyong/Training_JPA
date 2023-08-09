@@ -11,8 +11,10 @@
             <property name="javax.persistence.jdbc.user" value="myjpa"/>
             <property name="javax.persistence.jdbc.password" value="root"/>
             <!--hiberNate-->
+            <!--콘솔에 실행되는 테이블 생성(DDL)을 출력해준다.-->
             <property name="hibernate.show_sql" value="true"/> <!--쿼리보여주기-->
             <property name="hibernate.format_sql" value="true"/> <!--일자 말고 포맷팅 예쁘게 정리해주기-->
+            <!--애플리케이션 실행 시점에 데이터베이스 테이블을 자동으로 생성해준다.-->
             <property name="hibernate.hbm2ddl.auto" value="create"/> <!--없는 데이터베이스를 쓸 예정이기에 create-->
         </properties>
     </persistence-unit>

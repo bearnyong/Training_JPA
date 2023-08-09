@@ -6,10 +6,7 @@ import com.training02.entity.Student;
 import com.training02.entity.Subject;
 import org.junit.jupiter.api.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 public class Training02Tests {
@@ -134,13 +131,23 @@ public class Training02Tests {
         Grade grade1 = new Grade().semester("1학기").gradeScore(80).builder();
         grade1.setGradePK(new GradePK(student.getStuNum(),1));
         grade1.setStudent(student); //연관관계 설정 grade1 -> student
+        System.out.println(grade1);
         entityManager.persist(grade1);
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        transaction.commit();
 
         //grade2 저장
         Grade grade2 = new Grade().semester("3학기").gradeScore(50).builder();
-        grade1.setGradePK(new GradePK(student.getStuNum(),1));
+        grade2.setGradePK(new GradePK(student.getStuNum(),1));
         grade2.setStudent(student); //연관관계 설정 grade2 -> student
+        System.out.println(grade2);
         entityManager.persist(grade2);
+
+        transaction.begin();
+        transaction.commit();
+
     }
 
     @Test

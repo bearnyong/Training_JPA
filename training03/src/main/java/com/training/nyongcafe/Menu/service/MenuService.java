@@ -48,7 +48,7 @@ public class MenuService {
      * 만약 예외가 발생하면 트랜잭션을 롤백한다.(503페이지) */
     @Transactional
     public int insertOneMenu(Menu menu) { //03_메뉴등록(POST)
-        Menu result = menuRepository.save(menu);
+        Menu result = menuRepository.save(menu); //@Transactional 때문에 savd 안해도 등록됨..(?)
         if (Objects.isNull(result)) {
             return 0; //result가 null일 경우 0 반환
         } else {

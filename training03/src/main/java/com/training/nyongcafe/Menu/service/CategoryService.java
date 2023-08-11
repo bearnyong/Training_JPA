@@ -15,9 +15,14 @@ public class CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    public List<Category> readAllCategorys() {
+    public List<Category> readAllCategorys() { //01_전체조회(GET)
         List<Category> categoryList = categoryRepository.findAll();
 
         return categoryList;
+    }
+
+    public Category readOneCategory(int categoryCode) { //02_부분조회(GET)
+        Category category = categoryRepository.findById(categoryCode);
+        return category;
     }
 }

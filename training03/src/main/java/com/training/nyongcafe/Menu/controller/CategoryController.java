@@ -5,11 +5,13 @@ import com.training.nyongcafe.Menu.entity.Category;
 import com.training.nyongcafe.Menu.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +33,17 @@ public class CategoryController {
         } else {
             List<CategoryDTO> categoryDTOList = categoryList.stream().map(category -> new CategoryDTO(category)).collect(Collectors.toList());
             return ResponseEntity.ok().body(categoryDTOList);
+        }
+    }
+
+    @GetMapping("/read/{categoryCode}") //02_부분조회(GET)
+    public ResponseEntity<?> readOneCategory(@PathVariable int categoryCode) {
+        Category category = categoryService.readOneCategory(categoryCode);
+        if (Objects.isNull(category)) {
+            return ResponseEntity.status(404).body("존재하지 않는 categoryCode 입니다...");
+        } else {
+            CategoryDTO categoryDTO = new CategoryDTO(category);
+            return ResponseEntity.ok().body(categoryDTO);
         }
     }
 }

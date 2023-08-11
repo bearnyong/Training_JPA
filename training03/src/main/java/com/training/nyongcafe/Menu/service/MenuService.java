@@ -1,5 +1,7 @@
 package com.training.nyongcafe.Menu.service;
 
+import com.training.nyongcafe.Menu.dto.MenuDTO;
+import com.training.nyongcafe.Menu.entity.Category;
 import com.training.nyongcafe.Menu.entity.Menu;
 import com.training.nyongcafe.Menu.repository.MenuRepository;
 import org.springframework.stereotype.Service;
@@ -49,6 +51,33 @@ public class MenuService {
             return 0; //result가 null일 경우 0 반환
         } else {
             return 1; //result가 null이 아닐 경우 1 반환
+        }
+    }
+
+    @Transactional
+    public int updateOneMenu(Menu findMenu, MenuDTO menu) { //04_메뉴수정(PUT)- DTO
+        if (!Objects.isNull(menu.getMenuName())) { //메뉴명
+            //넘어온 값이 null이 아닐 경우
+            findMenu.setMenuName(menu.getMenuName());
+        }
+        if (menu.getMenuPrice() > 0) { //메뉴가격
+            //넘어온 값이 0보다 클 경우 (기본값 0)
+            findMenu.setMenuPrice(menu.getMenuPrice());
+        }
+        if (!Objects.isNull(menu.getOrderableStatus())) { //주문가능상태
+            //넘어온 값이 null이 아닐 경우
+            findMenu.setOrderableStatus(menu.getOrderableStatus());
+        }
+        if (menu.getCategoryCode() > 0) { //카테고리코드
+            //넘어온 값이 0보다 클 경우 (기본값 0)
+            findMenu.setCategory(new Category().categoryCode(menu.getCategoryCode()));
+        }
+
+        Menu result = menuRepository.save(findMenu);
+        if (Objects.isNull(result)) {
+            return 0;
+        } else {
+            return 1;
         }
     }
 }

@@ -58,4 +58,10 @@ public class CategoryService {
             return 1;
         }
     }
+
+    @Transactional
+    public void deleteOneCategory(int deleteCategoryCode) { //05_카테고리삭제(DELETE)
+        categoryRepository.deleteById(deleteCategoryCode);
+        Category category = categoryRepository.findById(deleteCategoryCode);
+    }
 }

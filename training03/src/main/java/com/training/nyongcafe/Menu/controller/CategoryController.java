@@ -70,4 +70,11 @@ public class CategoryController {
             return ResponseEntity.ok().body(categoryDTO.getCategoryCode() + "번 카테고리가 수정되었습니다.");
         }
     }
+
+    @DeleteMapping("/{deleteCategoryCode}")
+    public ResponseEntity<?> deleteOneCategory(@PathVariable int deleteCategoryCode) { //05_카테고리삭제(DELETE)
+        categoryService.deleteOneCategory(deleteCategoryCode);
+
+        return ResponseEntity.ok().body(deleteCategoryCode + "번 카테고리 삭제 완료");
+    }
 }

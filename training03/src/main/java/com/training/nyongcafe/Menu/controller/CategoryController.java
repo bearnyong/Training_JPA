@@ -22,7 +22,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/read/list") //01_전체조회(GET)
+    @GetMapping //01_전체조회(GET)
     public ResponseEntity<List<?>> readAllCategorys() {
         List<Category> categoryList = categoryService.readAllCategorys();
         if (categoryList.size() <= 0) {
@@ -33,7 +33,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/read/{categoryCode}") //02_부분조회(GET)
+    @GetMapping("/{categoryCode}") //02_부분조회(GET)
     public ResponseEntity<?> readOneCategory(@PathVariable int categoryCode) {
         Category category = categoryService.readOneCategory(categoryCode);
         if (Objects.isNull(category)) {
@@ -44,7 +44,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/insert")
+    @PostMapping
     public ResponseEntity<?> insertOneCategory(CategoryDTO categoryDTO) { //03_카테고리등록(POST)
         Category category = new Category(categoryDTO);
 
@@ -56,7 +56,7 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<?> updateOneCategory(CategoryDTO categoryDTO) { //04_카테고리수정(PUT)
         Category findCategory = categoryService.readOneCategory(categoryDTO.getCategoryCode());
         if (Objects.isNull(findCategory)) {

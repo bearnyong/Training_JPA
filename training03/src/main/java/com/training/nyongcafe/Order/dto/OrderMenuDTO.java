@@ -1,26 +1,17 @@
-package com.training.nyongcafe.Order.entity;
+package com.training.nyongcafe.Order.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import java.io.Serializable;
-
-@Embeddable
-public class OrderPK implements Serializable { //N
-    //https://rachel0115.tistory.com/entry/JPA-%EB%B3%B5%ED%95%A9%ED%82%A4-%EB%A7%A4%ED%95%91%ED%95%98%EA%B8%B0-EmbeddedId-MapsId-isNew
-
-    @Column(name = "order_code")
+public class OrderMenuDTO {
     private int orderCode; //주문코드(FK)
-
-    @Column(name = "menu_code")
     private int menuCode; //메뉴코드(FK)
+    private int orderAmount; //주문수량
 
-    public OrderPK() {
-
+    public OrderMenuDTO() {
     }
 
-    public OrderPK(int orderCode, int menuCode) {
+    public OrderMenuDTO(int orderCode, int menuCode, int orderAmount) {
         this.orderCode = orderCode;
         this.menuCode = menuCode;
+        this.orderAmount = orderAmount;
     }
 
     public int getOrderCode() {
@@ -39,11 +30,20 @@ public class OrderPK implements Serializable { //N
         this.menuCode = menuCode;
     }
 
+    public int getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(int orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
     @Override
     public String toString() {
-        return "OrderMappingPK{" +
+        return "OrderMenuDTO{" +
                 "orderCode=" + orderCode +
                 ", menuCode=" + menuCode +
+                ", orderAmount=" + orderAmount +
                 '}';
     }
 }

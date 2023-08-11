@@ -22,7 +22,7 @@ public class Menu { //N
     @Column(name = "orderable_status")
     private String orderableStatus; //주문가능상태
 
-//    @MapsId("category_code")
+//    @MapsId("categoryCode")
     @ManyToOne //연관관계 매핑 -> setter로 연관관계 설정
     @JoinColumn(name = "category_code")
     private Category category;

@@ -4,10 +4,7 @@ import com.training.nyongcafe.Menu.dto.CategoryDTO;
 import com.training.nyongcafe.Menu.entity.Category;
 import com.training.nyongcafe.Menu.service.CategoryService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -46,4 +43,17 @@ public class CategoryController {
             return ResponseEntity.ok().body(categoryDTO);
         }
     }
+    
+    @PostMapping("/insert")
+    public ResponseEntity<?> insertOneCategory(CategoryDTO categoryDTO) { //03_카테고리등록(POST)
+        Category category = new Category(categoryDTO);
+
+        int result = categoryService.insertOneCategory(category);
+        if (result == 0) {
+            return ResponseEntity.status(404).body("카테고리 등록에 실패하였습니다...");
+        } else {
+            return ResponseEntity.ok().body("카테고리: " + category.getCategoryName() + " (이)가 등록되었습니다.");
+        }
+    }
+    
 }

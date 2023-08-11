@@ -11,7 +11,7 @@ import java.util.List;
 public class Category { //1
 
     @Id
-    @Column(name = "category_code")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //데이터베이스에서 관리하는 전략 사용
     private int categoryCode; //카테고리코드
 
     @Column(name = "category_name")

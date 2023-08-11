@@ -37,7 +37,7 @@ public class MenuService {
         return menuList;
     }
 
-    public Menu readOneMenu(int menuCode) { //02_부분조회(GET)- DTO
+    public Menu readOneMenu(int menuCode) { //02_부분조회(GET)
         Menu menu = menuRepository.findById(menuCode); //menuRepository에 findById 이름 그대로 가져가기
         return menu;
     }
@@ -47,7 +47,7 @@ public class MenuService {
      * 외부에서 이클래스의 메소드를 호출할 떄 트랜잭션을 시작하고 메소드를 종료할 때 트랜잭션을 커밋한다.
      * 만약 예외가 발생하면 트랜잭션을 롤백한다.(503페이지) */
     @Transactional
-    public int insertOneMenu(Menu menu) { //03_메뉴등록(POST)- DTO
+    public int insertOneMenu(Menu menu) { //03_메뉴등록(POST)
         Menu result = menuRepository.save(menu);
         if (Objects.isNull(result)) {
             return 0; //result가 null일 경우 0 반환
@@ -57,7 +57,7 @@ public class MenuService {
     }
 
     @Transactional
-    public int updateOneMenu(Menu findMenu, MenuDTO menu) { //04_메뉴수정(PUT)- DTO
+    public int updateOneMenu(Menu findMenu, MenuDTO menu) { //04_메뉴수정(PUT)
         if (!Objects.isNull(menu.getMenuName())) { //메뉴명
             //넘어온 값이 null이 아닐 경우
             findMenu.setMenuName(menu.getMenuName());
@@ -84,7 +84,7 @@ public class MenuService {
     }
 
     @Transactional
-    public void deleteOneMenu(int deleteMenuCode) { //05_메뉴삭제(DELETE)- DTO
+    public void deleteOneMenu(int deleteMenuCode) { //05_메뉴삭제(DELETE)
         menuRepository.deleteById(deleteMenuCode);
         Menu menu = menuRepository.findById(deleteMenuCode);
     }

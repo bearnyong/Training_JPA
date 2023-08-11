@@ -34,7 +34,7 @@ public class MenuController {
      * DELETE(삭제): /menus/1 -> /menus일 경우, 전체를 삭제한다는 의미이기 떄문에 말이 안됨...
      * */
 
-    @GetMapping("/read/list") //01_전체조회(GET)- DTO
+    @GetMapping("/read/list") //01_전체조회(GET)
     public ResponseEntity<List<?>> readAllMenus() { //localhost:8000/menus/read/list
         System.out.println("----------- 전체 메뉴 조회 시작");
         List<Menu> menuList = menuService.readAllMenus();
@@ -47,7 +47,7 @@ public class MenuController {
         }
     }
 
-    @GetMapping("/read/{menuCode}") //02_부분조회(GET)- DTO
+    @GetMapping("/read/{menuCode}") //02_부분조회(GET)
     public ResponseEntity<?> readOneMenu(@PathVariable int menuCode) { //localhost:8000/menus/read/1
         System.out.println("----------- " + menuCode + "번 메뉴 조회 시작");
         Menu menu = menuService.readOneMenu(menuCode);
@@ -60,7 +60,7 @@ public class MenuController {
         }
     }
 
-    @PostMapping("/insert") //03_메뉴등록(POST)- DTO
+    @PostMapping("/insert") //03_메뉴등록(POST)
     public ResponseEntity<?> insertOneMenu(MenuDTO menuDTO) {
         System.out.println("----------- 메뉴 등록 시작");
         Menu menu = new Menu(menuDTO); //메뉴코드(자동), 메뉴명, 메뉴가격, 주문가능상태
@@ -79,7 +79,7 @@ public class MenuController {
         }
     }
 
-    @PutMapping("/update") //04_메뉴수정(PUT)- DTO
+    @PutMapping("/update") //04_메뉴수정(PUT)
     public ResponseEntity<?> updateOneMenu(MenuDTO menuDTO) {
         System.out.println("----------- 메뉴 수정 시작");
 
@@ -110,7 +110,7 @@ public class MenuController {
         }
     }
 
-    @DeleteMapping("/{deleteMenuCode}") //05_메뉴삭제(DELETE)- DTO
+    @DeleteMapping("/{deleteMenuCode}") //05_메뉴삭제(DELETE)
     public ResponseEntity<?> deleteOneMenu(@PathVariable int deleteMenuCode/*{deleteMenuCode} 얘랑 이름 맞춰주기*/) {
         menuService.deleteOneMenu(deleteMenuCode);
 

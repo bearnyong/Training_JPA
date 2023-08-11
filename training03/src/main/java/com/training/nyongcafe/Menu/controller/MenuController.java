@@ -1,6 +1,7 @@
 package com.training.nyongcafe.Menu.controller;
 
 import com.training.nyongcafe.Menu.dto.MenuDTO;
+import com.training.nyongcafe.Menu.entity.Category;
 import com.training.nyongcafe.Menu.entity.Menu;
 import com.training.nyongcafe.Menu.service.MenuService;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +63,9 @@ public class MenuController {
         System.out.println("----------- 메뉴 등록 시작");
         Menu menu = new Menu(menuDTO);
 
+//        menu.setCategory(new Category().categoryCode(1)); //1값... 일단 넣어주기...
+        menu.setCategory(new Category().categoryCode(menuDTO.getCategoryCode())); //categorycode 값
+
         int result = menuService.insertOneMenu(menu);
         if (result == 0) {
             return ResponseEntity.status(404).body("메뉴 등록에 실패하였습니다...");
@@ -73,4 +77,6 @@ public class MenuController {
             return ResponseEntity.status(500).body("알 수 없는 오류가 발생하였습니다...");
         }
     }
+
+
 }

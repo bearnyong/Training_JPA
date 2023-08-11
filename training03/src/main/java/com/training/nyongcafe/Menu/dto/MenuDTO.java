@@ -17,8 +17,8 @@ public class MenuDTO {
         this.menuCode = menu.getMenuCode();
         this.menuName = menu.getMenuName();
         this.menuPrice = menu.getMenuPrice();
-        this.categoryCode = menu.getCategoryCode();
         this.orderableStatus = menu.getOrderableStatus();
+        this.categoryCode = menu.getCategory().getCategoryCode();
     }
 
     public MenuDTO(int menuCode, String menuName, int menuPrice, int categoryCode, String orderableStatus) {

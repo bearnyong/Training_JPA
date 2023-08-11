@@ -43,7 +43,7 @@ public class CategoryController {
             return ResponseEntity.ok().body(categoryDTO);
         }
     }
-    
+
     @PostMapping("/insert")
     public ResponseEntity<?> insertOneCategory(CategoryDTO categoryDTO) { //03_카테고리등록(POST)
         Category category = new Category(categoryDTO);
@@ -55,5 +55,19 @@ public class CategoryController {
             return ResponseEntity.ok().body("카테고리: " + category.getCategoryName() + " (이)가 등록되었습니다.");
         }
     }
-    
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateOneCategory(CategoryDTO categoryDTO) { //04_카테고리수정(PUT)
+        Category findCategory = categoryService.readOneCategory(categoryDTO.getCategoryCode());
+        if (Objects.isNull(findCategory)) {
+            return ResponseEntity.ok().body("해당 카테고리가 존재하지 않습니다...");
+        }
+
+        int result = categoryService.updateCategory(findCategory, categoryDTO);
+        if (result == 0) {
+            return ResponseEntity.status(404).body("카테고리 수정에 실패하였습니다...");
+        } else {
+            return ResponseEntity.ok().body(categoryDTO.getCategoryCode() + "번 카테고리가 수정되었습니다.");
+        }
+    }
 }

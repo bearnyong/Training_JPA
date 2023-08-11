@@ -41,4 +41,21 @@ public class CategoryService {
             return 1;
         }
     }
+
+    @Transactional
+    public int updateCategory(Category findCategory, CategoryDTO categoryDTO) { //04_카테고리수정(PUT)
+        if (!Objects.isNull(categoryDTO.getCategoryName())) {
+            findCategory.setCategoryName(categoryDTO.getCategoryName());
+        }
+        if (!Objects.isNull(categoryDTO.getRefCategoryCode())) {
+            findCategory.setRefCategoryCode(categoryDTO.getRefCategoryCode());
+        }
+
+        Category result = categoryRepository.save(findCategory);
+        if (Objects.isNull(result)) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
 }

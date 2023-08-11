@@ -5,6 +5,8 @@ import com.training.nyongcafe.Menu.entity.Category;
 import com.training.nyongcafe.Menu.entity.Menu;
 import com.training.nyongcafe.Menu.repository.MenuRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -79,5 +81,11 @@ public class MenuService {
         } else {
             return 1;
         }
+    }
+
+    @Transactional
+    public void deleteOneMenu(int deleteMenuCode) { //05_메뉴삭제(DELETE)- DTO
+        menuRepository.deleteById(deleteMenuCode);
+        Menu menu = menuRepository.findById(deleteMenuCode);
     }
 }

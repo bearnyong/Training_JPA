@@ -6,6 +6,7 @@ import com.training.nyongcafe.Menu.entity.Menu;
 import com.training.nyongcafe.Menu.service.MenuService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -107,5 +108,12 @@ public class MenuController {
         } else {
             return ResponseEntity.status(500).body("알 수 없는 오류가 발생하였습니다...");
         }
+    }
+
+    @DeleteMapping("/{deleteMenuCode}") //05_메뉴삭제(DELETE)- DTO
+    public ResponseEntity<?> deleteOneMenu(@PathVariable int deleteMenuCode/*{deleteMenuCode} 얘랑 이름 맞춰주기*/) {
+        menuService.deleteOneMenu(deleteMenuCode);
+
+        return ResponseEntity.ok().body(deleteMenuCode + "번 코드 삭제 완료");
     }
 }

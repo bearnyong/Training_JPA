@@ -1,16 +1,28 @@
 package com.training.nyongcafe.Order.dto;
 
+import com.training.nyongcafe.Order.entity.Order;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class OrderDTO {
 
     private int orderCode; //주문코드(PK)
-    private String orderDate; //주문일자
-    private String orederTime; //주문시간
+    private Date orderDate; //주문일자
+    private Date orederTime; //주문시간
     private int totalOrderPrice; //총주문금액
 
     public OrderDTO() {
     }
 
-    public OrderDTO(int orderCode, String orderDate, String orederTime, int totalOrderPrice) {
+    public OrderDTO(Order order) {
+        this.orderCode = order.getOrderCode();
+        this.orderDate = order.getOrderDate();
+        this.orederTime = order.getOrederTime();
+        this.totalOrderPrice = order.getTotalOrderPrice();
+    }
+
+    public OrderDTO(int orderCode, Date orderDate, Date orederTime, int totalOrderPrice) {
         this.orderCode = orderCode;
         this.orderDate = orderDate;
         this.orederTime = orederTime;
@@ -25,19 +37,19 @@ public class OrderDTO {
         this.orderCode = orderCode;
     }
 
-    public String getOrderDate() {
+    public Date getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
     }
 
-    public String getOrederTime() {
+    public Date getOrederTime() {
         return orederTime;
     }
 
-    public void setOrederTime(String orederTime) {
+    public void setOrederTime(Date orederTime) {
         this.orederTime = orederTime;
     }
 
@@ -53,8 +65,8 @@ public class OrderDTO {
     public String toString() {
         return "OrderDTO{" +
                 "orderCode=" + orderCode +
-                ", orderDate='" + orderDate + '\'' +
-                ", orederTime='" + orederTime + '\'' +
+                ", orderDate=" + orderDate +
+                ", orederTime=" + orederTime +
                 ", totalOrderPrice=" + totalOrderPrice +
                 '}';
     }

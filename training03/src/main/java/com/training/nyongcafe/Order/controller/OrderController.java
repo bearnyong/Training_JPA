@@ -62,4 +62,21 @@ public class OrderController {
         }
     }
 
+    @PutMapping //04_주문수정(PUT)
+    public ResponseEntity<?> updateOneOrder(OrderDTO orderDTO) {
+        Order findOrder = orderService.readOneOrder(orderDTO.getOrderCode());
+        if (Objects.isNull(findOrder)) {
+            return ResponseEntity.ok().body("해당 데이터가 존재하지 않습니다...");
+        }
+        
+        OrderDTO order = orderDTO;
+        order.getOrderCode();
+
+        int result = orderService.updateOneOrder(findOrder, order);
+        if (result == 0) {
+            return ResponseEntity.status(404).body("주문 수정에 실패하였습니다...");
+        } else {
+            return ResponseEntity.ok().body(orderDTO.getOrderCode() + "번 주문이 수정되었습니다.");
+        } 
+    }
 }

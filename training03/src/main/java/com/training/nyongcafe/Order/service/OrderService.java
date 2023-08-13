@@ -1,7 +1,9 @@
 package com.training.nyongcafe.Order.service;
 
+import com.training.nyongcafe.Order.dto.OrderDTO;
 import com.training.nyongcafe.Order.entity.Order;
 import com.training.nyongcafe.Order.repository.OrderRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,4 +41,23 @@ public class OrderService {
         }
     }
 
+    @Transactional
+    public int updateOneOrder(Order findOrder, OrderDTO order) { //04_주문수정(PUT)
+//        if (!Objects.isNull(order.getOrderDate())) {
+//            findOrder.setOrderDate(order.getOrderDate());
+//        }
+//        if (!Objects.isNull(order.getOrederTime())) {
+//            findOrder.setOrederTime(order.getOrederTime());
+//        }
+        if (order.getTotalOrderPrice() > 0) {
+            findOrder.setTotalOrderPrice(order.getTotalOrderPrice());
+        }
+
+        Order result = orderRepository.save(findOrder);
+        if (Objects.isNull(result)) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
 }

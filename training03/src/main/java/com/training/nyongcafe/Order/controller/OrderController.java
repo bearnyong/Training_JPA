@@ -79,4 +79,10 @@ public class OrderController {
             return ResponseEntity.ok().body(orderDTO.getOrderCode() + "번 주문이 수정되었습니다.");
         } 
     }
+
+    @DeleteMapping("/{deleleteOrderCode}") //05_주문삭제(DELETE)
+    public ResponseEntity<?> deleteOneOrder(@PathVariable int deleleteOrderCode) {
+        orderService.deleteOneOrder(deleleteOrderCode);
+        return ResponseEntity.ok().body(deleleteOrderCode + "번 주문 삭제 완료");
+    }
 }

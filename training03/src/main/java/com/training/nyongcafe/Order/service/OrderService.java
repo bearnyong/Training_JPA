@@ -4,7 +4,10 @@ import com.training.nyongcafe.Order.dto.OrderDTO;
 import com.training.nyongcafe.Order.entity.Order;
 import com.training.nyongcafe.Order.repository.OrderRepository;
 import org.aspectj.weaver.ast.Or;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -59,5 +62,11 @@ public class OrderService {
         } else {
             return 1;
         }
+    }
+
+
+    public void deleteOneOrder(int deleleteOrderCode) { //05_주문삭제(DELETE)
+        orderRepository.deleteById(deleleteOrderCode);
+        Order order = orderRepository.findById(deleleteOrderCode);
     }
 }

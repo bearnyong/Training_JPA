@@ -24,6 +24,11 @@ public class OrderService {
         return orderList;
     }
 
+    public Order readOneOrder(int orderCode) { //02_부분조회(GET)
+        Order order = orderRepository.findById(orderCode);
+        return order;
+    }
+
     @Transactional
     public int insertOneOrder(Order order) { //03_주문등록(POST)
         Order result = orderRepository.save(order);
@@ -33,4 +38,5 @@ public class OrderService {
             return 1;
         }
     }
+
 }

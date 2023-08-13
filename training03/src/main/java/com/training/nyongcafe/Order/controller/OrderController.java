@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -31,6 +32,17 @@ public class OrderController {
         } else {
             List<OrderDTO> orderDTOList = orderList.stream().map(order -> new OrderDTO(order)).collect(Collectors.toList());
             return ResponseEntity.ok().body(orderDTOList);
+        }
+    }
+
+    @GetMapping("/{orderCode}") //02_부분조회(GET)
+    public ResponseEntity<?> readOneOrder(@PathVariable int orderCode) {
+        Order order = orderService.readOneOrder(orderCode);
+        if (Objects.isNull(order)) {
+            return ResponseEntity.status(404).body("존재하지 않는 orderCode 입니다...");
+        } else {
+            OrderDTO orderDTO = new OrderDTO(order);
+            return ResponseEntity.ok().body(orderDTO);
         }
     }
 
